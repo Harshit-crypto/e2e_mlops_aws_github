@@ -27,7 +27,8 @@ import mlflow
 from urllib.parse import urlparse
 
 import dagshub
-dagshub.init(token = os.getenv("DAGSHUB_USER_TOKEN"),repo_owner='Harshit-crypto', repo_name='e2e_mlops_aws_github', mlflow=True)
+dagshub.auth.add_app_token(os.environ.get("DAGSHUB_USER_TOKEN"))
+dagshub.init(repo_owner='Harshit-crypto', repo_name='e2e_mlops_aws_github', mlflow=True)
 
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
