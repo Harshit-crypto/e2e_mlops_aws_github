@@ -27,15 +27,7 @@ import mlflow
 from urllib.parse import urlparse
 
 import dagshub
-#dagshub.init(repo_owner='krishnaik06', repo_name='networksecurity', mlflow=True)
-
-os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/krishnaik06/networksecurity.mlflow"
-os.environ["MLFLOW_TRACKING_USERNAME"]="krishnaik06"
-os.environ["MLFLOW_TRACKING_PASSWORD"]="7104284f1bb44ece21e0e2adb4e36a250ae3251f"
-
-
-
-
+dagshub.init(repo_owner='Harshit-crypto', repo_name='e2e_mlops_aws_github', mlflow=True)
 
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
@@ -46,7 +38,7 @@ class ModelTrainer:
             raise NetworkSecurityException(e,sys)
         
     def track_mlflow(self,best_model,classificationmetric):
-        mlflow.set_registry_uri("https://dagshub.com/krishnaik06/networksecurity.mlflow")
+        mlflow.set_registry_uri("https://dagshub.com/Harshit-crypto/e2e_mlops_aws_github.mlflow")
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
         with mlflow.start_run():
             f1_score=classificationmetric.f1_score
@@ -66,7 +58,7 @@ class ModelTrainer:
                 # There are other ways to use the Model Registry, which depends on the use case,
                 # please refer to the doc for more information:
                 # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-                mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model)
+                mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model.__class__.__name__)
             else:
                 mlflow.sklearn.log_model(best_model, "model")
 
@@ -75,11 +67,13 @@ class ModelTrainer:
     def train_model(self,X_train,y_train,x_test,y_test):
         models = {
                 "Random Forest": RandomForestClassifier(verbose=1),
-                "Decision Tree": DecisionTreeClassifier(),
+                "Decision Tree": DecisionTreeClassifier()}
+        """
                 "Gradient Boosting": GradientBoostingClassifier(verbose=1),
                 "Logistic Regression": LogisticRegression(verbose=1),
                 "AdaBoost": AdaBoostClassifier(),
-            }
+                }
+        """
         params={
             "Decision Tree": {
                 'criterion':['gini', 'entropy', 'log_loss'],
@@ -91,7 +85,8 @@ class ModelTrainer:
                 
                 # 'max_features':['sqrt','log2',None],
                 'n_estimators': [8,16,32,128,256]
-            },
+            }}
+        """
             "Gradient Boosting":{
                 # 'loss':['log_loss', 'exponential'],
                 'learning_rate':[.1,.01,.05,.001],
@@ -107,6 +102,7 @@ class ModelTrainer:
             }
             
         }
+        """
         model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=x_test,y_test=y_test,
                                           models=models,param=params)
         

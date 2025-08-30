@@ -6,3 +6,5 @@ __pycache__
 pyvenv.cfg
 Artifacts
 logs
+final_model
+prediction_output
