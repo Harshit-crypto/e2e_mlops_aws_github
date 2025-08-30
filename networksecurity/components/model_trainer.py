@@ -29,6 +29,12 @@ from urllib.parse import urlparse
 import dagshub
 dagshub.init(repo_owner='Harshit-crypto', repo_name='e2e_mlops_aws_github', mlflow=True)
 
+
+os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/Harshit-crypto/e2e_mlops_aws_github.mlflow"
+os.environ["MLFLOW_TRACKING_USERNAME"]="Harshit-crypto"
+os.environ["MLFLOW_TRACKING_PASSWORD"]="8b8a9a3674abacd3f5395408b7f328084fc62bf5"
+
+
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
         try:
