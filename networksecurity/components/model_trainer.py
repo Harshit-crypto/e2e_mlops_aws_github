@@ -70,6 +70,7 @@ class ModelTrainer:
                 "Random Forest": RandomForestClassifier(verbose=1),
                 "Decision Tree": DecisionTreeClassifier()}
         """
+        comment
                 "Gradient Boosting": GradientBoostingClassifier(verbose=1),
                 "Logistic Regression": LogisticRegression(verbose=1),
                 "AdaBoost": AdaBoostClassifier(),
